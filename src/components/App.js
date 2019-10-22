@@ -3,13 +3,19 @@ import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import PollList from './PollList'
 
+const appContainerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+}
+
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
   render() {
     return (
-      <div>
+      <div style={appContainerStyle}>
         {this.props.loading === true
           ? null
           : <PollList />}
@@ -18,7 +24,7 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ authedUser }) {
+function mapStateToProps({ authedUser }) {
   return {
     loading: authedUser === null
   };

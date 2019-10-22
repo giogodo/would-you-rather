@@ -5,6 +5,10 @@ import Tabs from 'muicss/lib/react/tabs';
 import Tab from 'muicss/lib/react/tab';
 import PollItem from './PollItem'
 
+const mainPanelStyle = {
+  margin: 10,
+  maxWidth: 720
+};
 const tabStyle = {
   paddingTop: 20
 };
@@ -12,8 +16,8 @@ const tabStyle = {
 class PollList extends Component {
   render() {
     return (
-      <Panel>
-        <Tabs defaultSelectedIndex={0} >
+      <Panel style={mainPanelStyle}>
+        <Tabs defaultSelectedIndex={0} justified={true}>
           <Tab value="pane-1" label="Unanswered Questions">
             <div style={tabStyle}>
               {this.props.unansweredQuestions.map((id) => (
