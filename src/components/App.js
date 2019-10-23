@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
-import PollList from './PollList';
 import LoadingBar from 'react-redux-loading';
+import PollList from './PollList';
+import CreateQuestion from './CreateQuestion';
 
 const mainContainerStyle = {
   display: 'flex',
@@ -25,7 +26,7 @@ class App extends Component {
         <div style={mainContainerStyle}>
           {this.props.loading === true
             ? null
-            : <PollList />}
+            : <CreateQuestion />}
         </div>
       </div>
 

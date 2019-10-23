@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import Panel from 'muicss/lib/react/panel';
 import Tabs from 'muicss/lib/react/tabs';
 import Tab from 'muicss/lib/react/tab';
-import PollItem from './PollItem'
+import PollItem from './PollItem';
 
 const mainPanelStyle = {
   margin: 10,
-  maxWidth: 720
+  maxWidth: 620
 };
 const tabStyle = {
   paddingTop: 20

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Panel from 'muicss/lib/react/panel';
 import Button from 'muicss/lib/react/button';
 import Divider from 'muicss/lib/react/divider';
