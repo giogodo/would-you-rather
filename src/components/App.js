@@ -4,7 +4,12 @@ import { handleInitialData } from '../actions/shared';
 import LoadingBar from 'react-redux-loading';
 import PollList from './PollList';
 import CreateQuestion from './CreateQuestion';
+import NotFound from './NotFound'
 
+const background = {
+  backgroundColor: '#eee',
+  height: "100vh"
+};
 const mainContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -21,12 +26,12 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={background}>
         <LoadingBar style={loadingBarStyle}/>
         <div style={mainContainerStyle}>
           {this.props.loading === true
             ? null
-            : <CreateQuestion />}
+            : <NotFound/>}
         </div>
       </div>
 

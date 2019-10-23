@@ -14,6 +14,9 @@ const mainPanelStyle = {
   flexDirection: 'column'
 };
 const headerStyle = {
+  flex: 1,
+  display: 'flex',
+  justifyContent: 'center',
   marginBottom: 10,
   padding: 10
 };
