@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { handleAddQuestion } from "../actions/shared";
 import Panel from "muicss/lib/react/panel";
 import Divider from "muicss/lib/react/divider";
@@ -48,7 +49,8 @@ const buttonStyle = {
 class CreateQuestion extends Component {
   state = {
     optionA: "",
-    optionB: ""
+    optionB: "",
+    toHome: false
   };
 
   handleChange = e => {
@@ -65,12 +67,16 @@ class CreateQuestion extends Component {
     dispatch(handleAddQuestion(optionA, optionB));
     this.setState(() => ({
       optionA: "",
-      optionB: ""
+      optionB: "",
+      toHome: true
     }));
   };
 
   render() {
-    const { optionA, optionB } = this.state;
+    const { optionA, optionB, toHome } = this.state;
+    if (toHome === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
