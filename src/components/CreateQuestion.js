@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { handleAddQuestion } from "../actions/questions";
+import { handleAddQuestion } from "../actions/shared";
 import Panel from "muicss/lib/react/panel";
 import Divider from "muicss/lib/react/divider";
 import Input from "muicss/lib/react/input";
