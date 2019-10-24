@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-//import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { handleAddQuestion } from "../actions/questions";
 import Panel from "muicss/lib/react/panel";
 import Divider from "muicss/lib/react/divider";
 import Input from "muicss/lib/react/input";
@@ -46,8 +47,8 @@ const buttonStyle = {
 
 class CreateQuestion extends Component {
   state = {
-    optionA: '',
-    optionB: ''
+    optionA: "",
+    optionB: ""
   };
 
   handleChange = e => {
@@ -59,10 +60,12 @@ class CreateQuestion extends Component {
   };
 
   handleSubmit = e => {
-    console.log(this.state);
+    const { optionA, optionB } = this.state;
+    const { dispatch } = this.props;
+    dispatch(handleAddQuestion(optionA, optionB));
     this.setState(() => ({
-      optionA: '',
-      optionB: ''
+      optionA: "",
+      optionB: ""
     }));
   };
 
@@ -107,7 +110,7 @@ class CreateQuestion extends Component {
           <Button
             color="primary"
             style={buttonStyle}
-            disabled={optionA === '' || optionB === ''}
+            disabled={optionA === "" || optionB === ""}
             onClick={this.handleSubmit}
           >
             Submit
@@ -118,4 +121,4 @@ class CreateQuestion extends Component {
   }
 }
 
-export default CreateQuestion;
+export default connect()(CreateQuestion);
