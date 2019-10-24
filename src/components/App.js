@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import LoadingBar from 'react-redux-loading';
 //import PollList from './PollList';
-import Login from './Login';
+//import Login from './Login';
 //import CreateQuestion from './CreateQuestion';
 //import NotFound from './NotFound';
+import Question from './Question'
 
 const mainContainerStyle = {
   display: 'flex',
@@ -28,10 +29,9 @@ class App extends Component {
         <div style={mainContainerStyle}>
           {this.props.loading === true
             ? null
-            : <Login/>}
+            : <Question/>}
         </div>
       </div>
-
     );
   }
 }
