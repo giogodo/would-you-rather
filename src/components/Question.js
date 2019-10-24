@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-//import { connect } from "react-redux";
+import { connect } from "react-redux";
+import Results from "./Results";
 import Panel from "muicss/lib/react/panel";
 import Divider from "muicss/lib/react/divider";
 
@@ -26,18 +27,23 @@ const contentStyle = {
 
 class Question extends Component {
   render() {
-    const temporalAnswered = false;
+    const {
+      qid,
+      authorName,
+      authorAvatar,
+      isAnsweredByAuthedUser
+    } = this.props;
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
           <div className="mui--text-headline">
-            <b>Tyler McGinnis asks:</b>
+            <b>{authorName} asks:</b>
           </div>
         </div>
         <Divider />
         <div style={contentStyle}>
           <img
-            src={"https://api.adorable.io/avatars/285/tylermcginnis.png"}
+            src={authorAvatar}
             alt={"Avatar"}
             height="180"
             width="180"
@@ -53,81 +59,7 @@ class Question extends Component {
               flex: 1
             }}
           >
-            <div
-              className="mui--text-display1"
-              style={{
-                marginTop: 20,
-                marginBottom: 20
-              }}
-            >
-              <b>Results:</b>
-            </div>
-            <Panel
-              style={{
-                marginBottom: 25,
-                padding: 28,
-                height: 120,
-                display: "flex",
-                flexDirection: "column"
-              }}
-            >
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                <div className="mui--text-subhead">
-                  Would you rather find $50 yourself?
-                </div>
-              </div>
-              <Divider />
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                <div className="mui--text-subhead">
-                  2 out of 3 votes
-                </div>
-              </div>
-            </Panel>
-            <Panel
-              style={{
-                marginBottom: 25,
-                padding: 28,
-                height: 120,
-                display: "flex",
-                flexDirection: "column"
-              }}
-            >
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                <div className="mui--text-subhead">
-                  Would you rather have your best friend find $500?
-                </div>
-              </div>
-              <Divider />
-              <div
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                <div className="mui--text-subhead">
-                  1 out of 3 votes
-                </div>
-              </div>
-            </Panel>
+            {isAnsweredByAuthedUser && <Results qid={qid} />}
           </div>
         </div>
       </Panel>
@@ -135,4 +67,18 @@ class Question extends Component {
   }
 }
 
-export default Question;
+function mapStateToProps({ questions, users, authedUser }, { qid }) {
+  const authorName = users[questions[qid].author].name;
+  const authorAvatar = users[questions[qid].author].avatarURL;
+  const isAnsweredByAuthedUser =
+    questions[qid].optionOne.votes.includes(authedUser) ||
+    questions[qid].optionTwo.votes.includes(authedUser);
+  return {
+    qid,
+    authorName,
+    authorAvatar,
+    isAnsweredByAuthedUser: isAnsweredByAuthedUser
+  };
+}
+
+export default connect(mapStateToProps)(Question);
