@@ -25,6 +25,13 @@ export function saveQuestion(data) {
   return _saveQuestion(data);
 }
 
+/**
+ * @description Save question answer method for the fake api.
+ * @param {Object} data - All the data to answer the question and do the two ways linking (User with question, question with user).
+ * @param {string} data.authedUser - Id of the person that is answering the question.
+ * @param {string} data.qid - Id of the question being answer.
+ * @param {string} data.answer - The option selected, this can be: optionOne or optionTwo.
+ */
 export function saveQuestionAnswer(data) {
   return _saveQuestionAnswer(data);
 }

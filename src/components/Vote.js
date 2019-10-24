@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { handleAddAnswer } from "../actions/shared";
 import Panel from "muicss/lib/react/panel";
 import Radio from "muicss/lib/react/radio";
 import Button from "muicss/lib/react/button";
@@ -39,12 +40,13 @@ class Result extends Component {
 
   handleSubmit = e => {
     const { answer } = this.state;
+    const { dispatch, qid } = this.props;
     e.preventDefault();
-    console.log(answer);
+    dispatch(handleAddAnswer(qid, answer));
   };
 
   render() {
-    const {question, authedUser} = this.props
+    const { question } = this.props;
     const { answer } = this.state;
     return (
       <div>
@@ -84,10 +86,9 @@ class Result extends Component {
   }
 }
 
-function mapStateToProps({ questions, authedUser }, { qid }) {
+function mapStateToProps({ questions }, { qid }) {
   const question = questions[qid];
   return {
-    authedUser,
     question
   };
 }

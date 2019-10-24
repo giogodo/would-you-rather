@@ -1,6 +1,6 @@
-import { getInitialData, saveQuestion } from "../utils/api";
-import { receiveUsers, linkQuestion } from "../actions/users";
-import { receiveQuestions, addQuestion } from "../actions/questions";
+import { getInitialData, saveQuestion, saveQuestionAnswer } from "../utils/api";
+import { receiveUsers, linkQuestion, linkAnswer } from "../actions/users";
+import { receiveQuestions, addQuestion, addAnswer } from "../actions/questions";
 import { setAuthedUser } from "../actions/authedUser";
 import { showLoading, hideLoading } from "react-redux-loading";
 
@@ -40,6 +40,24 @@ export function handleAddQuestion(optionOne, optionTwo) {
             qid: question.id
           })
         );
+      })
+      .then(() => dispatch(hideLoading()));
+  };
+}
+
+export function handleAddAnswer(qid, answer) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState();
+    const data = {
+      authedUser,
+      qid,
+      answer
+    };
+    dispatch(showLoading());
+    return saveQuestionAnswer(data)
+      .then(() => {
+        dispatch(addAnswer(data));
+        dispatch(linkAnswer(data));
       })
       .then(() => dispatch(hideLoading()));
   };
