@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Results from "./Results";
+import Vote from "./Vote";
 import Panel from "muicss/lib/react/panel";
 import Divider from "muicss/lib/react/divider";
 
@@ -59,7 +60,11 @@ class Question extends Component {
               flex: 1
             }}
           >
-            {isAnsweredByAuthedUser && <Results qid={qid} />}
+            {isAnsweredByAuthedUser ? (
+              <Results qid={qid} />
+            ) : (
+              <Vote qid={qid} />
+            )}
           </div>
         </div>
       </Panel>
