@@ -1,60 +1,78 @@
-import React, { Component } from 'react';
-//import { connect } from 'react-redux';
-import Panel from 'muicss/lib/react/panel';
-import Divider from 'muicss/lib/react/divider';
-import Input from 'muicss/lib/react/input';
-import Button from 'muicss/lib/react/button';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/authedUser";
+import Panel from "muicss/lib/react/panel";
+import Divider from "muicss/lib/react/divider";
+import Dropdown from "muicss/lib/react/dropdown";
+import DropdownItem from "muicss/lib/react/dropdown-item";
+import Button from "muicss/lib/react/button";
 
 const mainPanelStyle = {
-  display: 'table',
-  tableLayout: 'fixed',
+  display: "table",
+  tableLayout: "fixed",
   width: "100%",
   margin: 10,
   maxWidth: 620,
-  flexDirection: 'column'
+  flexDirection: "column"
 };
 const headerStyle = {
   flex: 1,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   marginBottom: 10,
   padding: 10,
-  flexDirection: 'column'
+  flexDirection: "column"
 };
 const contentStyle = {
-  alignItems: 'center',
+  alignItems: "center",
   marginTop: 10,
   padding: 10,
-  display: 'flex',
-  flexDirection: 'column'
-};
-const labelStyle = {
-  marginTop: 10,
-  marginBottom: 15
-};
-const inputStyle = {
-  marginTop: 10,
-  marginBottom: 15
-};
-const orStyle = {
-  flex: 1,
-  display: 'flex',
-  justifyContent: 'center',
-  marginTop: 25
+  display: "flex",
+  flexDirection: "column"
 };
 const buttonStyle = {
   marginTop: 25,
-  alignSelf: 'stretch'
+  width: 200
+};
+const dropdownStyle = {
+  paddingTop: 30
+};
+const dropdownItemStyle = {
+  width: 434,
+  display: "flex",
+  alignItems: "center",
+  pointerEvents: "none"
+};
+const avatarStyle = {
+  borderRadius: 5,
+  marginTop: 10,
+  marginBottom: 10,
+  marginRight: 25
 };
 
 class Login extends Component {
   state = {
-    optionA: '',
-    optionB: ''
-  }
+    selectedUser: null
+  };
+
+  handleOnSelect = selectedUser => {
+    this.setState(() => ({
+      selectedUser
+    }));
+  };
+
+  handleSignIn = () => {
+    const { dispatch } = this.props;
+    const { selectedUser } = this.state;
+    dispatch(setAuthedUser(selectedUser));
+  };
 
   render() {
+    const { selectedUser } = this.state;
+    const { users } = this.props;
+    const reduxLogo =
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png";
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
@@ -67,19 +85,49 @@ class Login extends Component {
         </div>
         <Divider />
         <div style={contentStyle}>
-        <img
-              src={"https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png"}
-              alt={'Redux'}
-              height="244"
-              width="312"
-              style={{}}
-            />
-          <Button color="primary" style={buttonStyle}>Sign in</Button>
+          <img src={reduxLogo} alt={"Redux"} height="244" width="312" />
+          <Dropdown
+            variant="raised"
+            onSelect={this.handleOnSelect}
+            style={dropdownStyle}
+            label={
+              selectedUser ||
+              "Select an user from the list... And press sign in."
+            }
+          >
+            {Object.values(users).map(user => (
+              <DropdownItem key={user.id} id={user.id} value={user.id}>
+                <div style={dropdownItemStyle}>
+                  <img
+                    src={user.avatarURL}
+                    alt={`Avatar of ${user.name}`}
+                    height="56"
+                    width="56"
+                    style={avatarStyle}
+                  />
+                  <div className="mui--text-subhead">{user.name}</div>
+                </div>
+              </DropdownItem>
+            ))}
+          </Dropdown>
+          <Button
+            color="primary"
+            style={buttonStyle}
+            disabled={!selectedUser}
+            onClick={this.handleSignIn}
+          >
+            Sign in
+          </Button>
         </div>
       </Panel>
     );
   }
 }
 
+function mapStateToProps({ users }) {
+  return {
+    users
+  };
+}
 
-export default Login;
+export default connect(mapStateToProps)(Login);

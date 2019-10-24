@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import LoadingBar from 'react-redux-loading';
 //import PollList from './PollList';
-//import Login from './Login';
-import CreateQuestion from './CreateQuestion';
+import Login from './Login';
+//import CreateQuestion from './CreateQuestion';
 //import NotFound from './NotFound';
 
 const mainContainerStyle = {
@@ -28,7 +28,7 @@ class App extends Component {
         <div style={mainContainerStyle}>
           {this.props.loading === true
             ? null
-            : <CreateQuestion/>}
+            : <Login/>}
         </div>
       </div>
 
