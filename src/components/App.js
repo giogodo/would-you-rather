@@ -38,8 +38,8 @@ class App extends Component {
               <Switch>
                 <PrivateRoute path="/" exact component={PollList} />
                 <PrivateRoute path="/add" component={CreateQuestion} />
-                <PrivateRoute path="/leaderboard" component={LeaderBoard}/>
-                <PrivateRoute path="/questions/:id" component={Question}/>
+                <PrivateRoute path="/leaderboard" component={LeaderBoard} />
+                <PrivateRoute path="/questions/:id" component={Question} />
                 <Route path="/login" component={Login} />
                 <Route component={NotFound} />
               </Switch>
@@ -51,8 +51,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ authedUser, loadingBar }) {
-  const loading = loadingBar.default !== 0;
+function mapStateToProps({ users }) {
+  const loading = Object.keys(users).length === 0;
   return {
     loading
   };
