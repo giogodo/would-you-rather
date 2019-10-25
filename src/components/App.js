@@ -28,21 +28,21 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Fragment>
-          <NavBar />
-          <LoadingBar style={loadingBarStyle} />
-          <div style={mainContainerStyle}>
-            {this.props.loading === true ? null : (
+        <LoadingBar style={loadingBarStyle} />
+        {this.props.loading === true ? null : (
+          <Fragment>
+            <NavBar />
+            <div style={mainContainerStyle}>
               <Switch>
                 <Route path="/" exact component={PollList} />
                 <Route path="/add" component={CreateQuestion} />
                 <Route path="/login" component={Login} />
-                <Route path="/question/:id" component={Question} />
+                <Route path="/questions/:id" component={Question} />
                 <Route component={NotFound} />
               </Switch>
-            )}
-          </div>
-        </Fragment>
+            </div>
+          </Fragment>
+        )}
       </Router>
     );
   }

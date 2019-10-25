@@ -77,13 +77,10 @@ class Result extends Component {
           <Divider />
           <div style={stadisticsContainer}>
             <div className="mui--text-subhead">
-              {(optionOneData.votes /
-                (optionOneData.votes + optionTwoData.votes)) *
-                100} %
+              {Math.round((optionOneData.votes/(optionOneData.votes+optionTwoData.votes))*100)} %
             </div>
             <div className="mui--text-subhead">
-              {optionOneData.votes} out of{" "}
-              {optionOneData.votes + optionTwoData.votes} votes
+              {optionOneData.votes} out of {optionOneData.votes + optionTwoData.votes} votes
             </div>
           </div>
         </Panel>
@@ -109,13 +106,10 @@ class Result extends Component {
           <Divider />
           <div style={stadisticsContainer}>
             <div className="mui--text-subhead">
-              {(optionTwoData.votes /
-                (optionOneData.votes + optionTwoData.votes)) *
-                100} %
+              {Math.round((optionTwoData.votes/(optionOneData.votes+optionTwoData.votes))*100)} %
             </div>
             <div className="mui--text-subhead">
-              {optionTwoData.votes} out of{" "}
-              {optionOneData.votes + optionTwoData.votes} votes
+              {optionTwoData.votes} out of {optionOneData.votes + optionTwoData.votes} votes
             </div>
           </div>
         </Panel>

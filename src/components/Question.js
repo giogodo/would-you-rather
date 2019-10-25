@@ -72,7 +72,8 @@ class Question extends Component {
   }
 }
 
-function mapStateToProps({ questions, users, authedUser }, { qid }) {
+function mapStateToProps({ questions, users, authedUser }, props) {
+  const qid = props.match.params.id;
   const authorName = users[questions[qid].author].name;
   const authorAvatar = users[questions[qid].author].avatarURL;
   const isAnsweredByAuthedUser =
