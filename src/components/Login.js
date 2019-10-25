@@ -7,6 +7,7 @@ import Divider from "muicss/lib/react/divider";
 import Dropdown from "muicss/lib/react/dropdown";
 import DropdownItem from "muicss/lib/react/dropdown-item";
 import Button from "muicss/lib/react/button";
+import loginImage from '../images/login.png'
 
 const mainPanelStyle = {
   display: "table",
@@ -76,8 +77,6 @@ class Login extends Component {
   render() {
     const { selectedUser, redirect } = this.state;
     const { users, history } = this.props;
-    const reduxLogo =
-      "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png";
     if (redirect === true) {
       return (
         // Making the redirection to the previusly pretended route
@@ -101,7 +100,7 @@ class Login extends Component {
         </div>
         <Divider />
         <div style={contentStyle}>
-          <img src={reduxLogo} alt={"Redux"} height="244" width="312" />
+          <img src={loginImage} alt={"Redux"} height="450" width="450" />
           <Dropdown
             variant="raised"
             onSelect={this.handleOnSelect}
