@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Results from "./Results";
 import Vote from "./Vote";
 import Panel from "muicss/lib/react/panel";
@@ -28,12 +29,22 @@ const contentStyle = {
 
 class Question extends Component {
   render() {
-    const {
-      qid,
-      authorName,
-      authorAvatar,
-      isAnsweredByAuthedUser
-    } = this.props;
+    const { questions, users, authedUser, match } = this.props;
+    const qid = match.params.id;
+
+    if (questions[qid] === undefined) {
+      return (
+        // Making the redirection to the NotFound component
+        <Redirect to={"/notfound"} />
+      );
+    }
+
+    const authorName = users[questions[qid].author].name;
+    const authorAvatar = users[questions[qid].author].avatarURL;
+    const isAnsweredByAuthedUser =
+      questions[qid].optionOne.votes.includes(authedUser) ||
+      questions[qid].optionTwo.votes.includes(authedUser);
+
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
@@ -73,17 +84,11 @@ class Question extends Component {
 }
 
 function mapStateToProps({ questions, users, authedUser }, props) {
-  const qid = props.match.params.id;
-  const authorName = users[questions[qid].author].name;
-  const authorAvatar = users[questions[qid].author].avatarURL;
-  const isAnsweredByAuthedUser =
-    questions[qid].optionOne.votes.includes(authedUser) ||
-    questions[qid].optionTwo.votes.includes(authedUser);
   return {
-    qid,
-    authorName,
-    authorAvatar,
-    isAnsweredByAuthedUser: isAnsweredByAuthedUser
+    questions,
+    users,
+    authedUser,
+    ...props
   };
 }
 

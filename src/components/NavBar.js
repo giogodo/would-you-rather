@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/authedUser";
 import Appbar from "muicss/lib/react/appbar";
 
 const mainContainerStyle = {
@@ -36,7 +37,7 @@ const imageStyle = {
 class NavBar extends Component {
   render() {
     const path = this.props.location.pathname;
-    const { authedUser, users } = this.props;
+    const { authedUser, users, dispatch } = this.props;
     return (
       <Appbar>
         <table width="100%">
@@ -64,7 +65,9 @@ class NavBar extends Component {
                 <Link to="/leaderboard">
                   <div
                     style={
-                      path === "/leaderboard" ? whiteButtonStyle : fadeButtonStyle
+                      path === "/leaderboard"
+                        ? whiteButtonStyle
+                        : fadeButtonStyle
                     }
                   >
                     <div className="mui--text-subhead">
@@ -87,7 +90,12 @@ class NavBar extends Component {
                     width="50"
                     style={imageStyle}
                   />
-                  <Link to="/login">
+                  <Link
+                    to="/login"
+                    onClick={() => {
+                      dispatch(setAuthedUser(null));
+                    }}
+                  >
                     <div style={whiteButtonStyle}>
                       <div className="mui--text-subhead">
                         <b>Logout</b>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect, withRouter } from "react-router-dom";
 import { setAuthedUser } from "../actions/authedUser";
 import Panel from "muicss/lib/react/panel";
 import Divider from "muicss/lib/react/divider";
@@ -53,7 +54,8 @@ const avatarStyle = {
 
 class Login extends Component {
   state = {
-    selectedUser: null
+    selectedUser: null,
+    redirect: false
   };
 
   handleOnSelect = selectedUser => {
@@ -66,13 +68,27 @@ class Login extends Component {
     const { dispatch } = this.props;
     const { selectedUser } = this.state;
     dispatch(setAuthedUser(selectedUser));
+    this.setState(() => ({
+      redirect: true
+    }));
   };
 
   render() {
-    const { selectedUser } = this.state;
-    const { users } = this.props;
+    const { selectedUser, redirect } = this.state;
+    const { users, history } = this.props;
     const reduxLogo =
       "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png";
+    if (redirect === true) {
+      return (
+        // Making the redirection to the previusly pretended route
+        <Redirect
+          to={
+            (history.location.state && history.location.state.from.pathname) ||
+            "/"
+          }
+        />
+      );
+    }
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
@@ -130,4 +146,4 @@ function mapStateToProps({ users }) {
   };
 }
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login));

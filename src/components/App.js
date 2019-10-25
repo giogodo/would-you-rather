@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import LoadingBar from "react-redux-loading";
 import NavBar from "./NavBar";
+import PrivateRoute from "./PrivateRoute";
 import PollList from "./PollList";
 import Login from "./Login";
 import CreateQuestion from "./CreateQuestion";
@@ -35,10 +36,10 @@ class App extends Component {
             <NavBar />
             <div style={mainContainerStyle}>
               <Switch>
-                <Route path="/" exact component={PollList} />
-                <Route path="/add" component={CreateQuestion} />
-                <Route path="/leaderboard" component={LeaderBoard} />
-                <Route path="/questions/:id" component={Question} />
+                <PrivateRoute path="/" exact component={PollList} />
+                <PrivateRoute path="/add" component={CreateQuestion} />
+                <PrivateRoute path="/leaderboard" component={LeaderBoard}/>
+                <PrivateRoute path="/questions/:id" component={Question}/>
                 <Route path="/login" component={Login} />
                 <Route component={NotFound} />
               </Switch>
@@ -50,9 +51,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, loadingBar }) {
+  const loading = loadingBar.default !== 0;
   return {
-    loading: authedUser === null
+    loading
   };
 }
 
