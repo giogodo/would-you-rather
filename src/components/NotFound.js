@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 import Panel from 'muicss/lib/react/panel';
 import Divider from 'muicss/lib/react/divider';
 import Button from 'muicss/lib/react/button';
@@ -28,7 +29,21 @@ const contentStyle = {
 };
 
 class NotFound extends Component {
+  state = {
+    toHome: false
+  };
+
+  handleClick = e => {
+    this.setState(()=>({
+      toHome: true
+    }));
+  };
+
   render() {
+    const { toHome } = this.state;
+    if (toHome === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
@@ -71,10 +86,15 @@ class NotFound extends Component {
               </g>
             </svg>
           </div>
-          <Button color="primary" style={{
-            maxWidth: 300,
-            alignSelf: 'center'
-          }}>Return to Home</Button>
+          <Button
+            color="primary"
+            onClick={this.handleClick}
+            style={{
+              maxWidth: 300,
+              alignSelf: 'center'
+            }}>
+            Return to Home
+          </Button>
         </div>
       </Panel>
     );

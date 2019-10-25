@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Appbar from "muicss/lib/react/appbar";
 
@@ -35,6 +35,7 @@ const imageStyle = {
 
 class NavBar extends Component {
   render() {
+    const path = this.props.location.pathname;
     const { authedUser, users } = this.props;
     return (
       <Appbar>
@@ -43,21 +44,29 @@ class NavBar extends Component {
             <tr style={mainContainerStyle}>
               <td className="mui--appbar-height" style={leftContainerStyle}>
                 <Link to="/">
-                  <div style={fadeButtonStyle}>
+                  <div
+                    style={path === "/" ? whiteButtonStyle : fadeButtonStyle}
+                  >
                     <div className="mui--text-subhead">
                       <b>Home</b>
                     </div>
                   </div>
                 </Link>
                 <Link to="/add">
-                  <div style={fadeButtonStyle}>
+                  <div
+                    style={path === "/add" ? whiteButtonStyle : fadeButtonStyle}
+                  >
                     <div className="mui--text-subhead">
                       <b>New Question</b>
                     </div>
                   </div>
                 </Link>
-                <Link to="/login">
-                  <div style={fadeButtonStyle}>
+                <Link to="/leaderboard">
+                  <div
+                    style={
+                      path === "/leaderboard" ? whiteButtonStyle : fadeButtonStyle
+                    }
+                  >
                     <div className="mui--text-subhead">
                       <b>Leader Board</b>
                     </div>
@@ -95,11 +104,11 @@ class NavBar extends Component {
   }
 }
 
-function mapStateToProps({ authedUser, users }) {
+function mapStateToProps({ authedUser, users }, props) {
   return {
     authedUser,
     users
   };
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default withRouter(connect(mapStateToProps)(NavBar));

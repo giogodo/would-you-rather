@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Panel from "muicss/lib/react/panel";
 import Button from "muicss/lib/react/button";
 import Divider from "muicss/lib/react/divider";
@@ -32,13 +33,15 @@ const pollContStyle = {
   display: "flex",
   flexDirection: "column"
 };
+const buttonStyle = {
+  width: "100%"
+};
 
 class Tweet extends Component {
   render() {
-    const { poll, author } = this.props;
-    const { optionOne } = poll;
+    const { question, author } = this.props;
+    const { optionOne, id } = question;
     const { name, avatarURL } = author;
-
     return (
       <Panel style={mainPanelStyle}>
         <div style={headerStyle}>
@@ -60,7 +63,11 @@ class Tweet extends Component {
             <div className="mui--text-subhead">
               ...{optionOne.text.slice(0, 15)}...
             </div>
-            <Button color="primary">View Poll</Button>
+            <Link to={`/questions/${id}`}>
+              <Button color="primary" style={buttonStyle}>
+                View Poll
+              </Button>
+            </Link>
           </div>
         </div>
       </Panel>
@@ -70,7 +77,7 @@ class Tweet extends Component {
 
 function mapStateToProps({ users, questions }, { id }) {
   return {
-    poll: questions[id],
+    question: questions[id],
     author: users[questions[id].author]
   };
 }

@@ -9,6 +9,7 @@ import Login from "./Login";
 import CreateQuestion from "./CreateQuestion";
 import NotFound from "./NotFound";
 import Question from "./Question";
+import LeaderBoard from "./LeaderBoard";
 
 const mainContainerStyle = {
   marginTop: 10,
@@ -36,8 +37,9 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={PollList} />
                 <Route path="/add" component={CreateQuestion} />
-                <Route path="/login" component={Login} />
+                <Route path="/leaderboard" component={LeaderBoard} />
                 <Route path="/questions/:id" component={Question} />
+                <Route path="/login" component={Login} />
                 <Route component={NotFound} />
               </Switch>
             </div>
